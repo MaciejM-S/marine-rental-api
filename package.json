@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
+    "start": "node index",
     "starter": "env-cmd -f ./config/dev.env ts-node-dev --respawn index.ts",
     "build": "tsc",
 
