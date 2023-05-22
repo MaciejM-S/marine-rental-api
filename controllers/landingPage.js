@@ -20,3 +20,6 @@ exports.firstVessels = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     const firstVessels = yield Vessel.find({ isFirstVessel: true });
     res.send({ vessels: firstVessels });
 });
+exports.startServer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send({ message: "server ready" });
+});
