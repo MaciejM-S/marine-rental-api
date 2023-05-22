@@ -6,6 +6,8 @@ const authorization = require("../middleware/authorization");
 router.use(cors());
 router.use(express.json());
 
+
+router.get("/startServer", landingPageController.startServer)
 router.get("/firstVessels", landingPageController.firstVessels);
 
 module.exports = router;

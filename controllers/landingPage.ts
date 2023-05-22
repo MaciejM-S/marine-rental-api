@@ -11,12 +11,19 @@ const errorHandler = (errorCode: number, next: NextFunction) => {
   next(newError);
 };
 
-
 exports.firstVessels = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const firstVessels = await Vessel.find({isFirstVessel:true})
+  const firstVessels = await Vessel.find({ isFirstVessel: true });
   res.send({ vessels: firstVessels });
+};
+
+exports.startServer = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  res.send({ message: "server ready" });
 };
