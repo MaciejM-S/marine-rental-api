@@ -27,3 +27,13 @@ exports.startServer = async (
 ) => {
   res.send({ message: "server ready" });
 };
+
+exports.isServerRunning = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  res.send({
+    message: "running",
+  });
+};
