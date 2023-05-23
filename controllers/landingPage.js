@@ -23,3 +23,8 @@ exports.firstVessels = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 exports.startServer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     res.send({ message: "server ready" });
 });
+exports.isServerRunning = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send({
+        message: "running",
+    });
+});

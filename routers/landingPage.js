@@ -8,4 +8,5 @@ router.use(cors());
 router.use(express.json());
 router.get("/startServer", landingPageController.startServer);
 router.get("/firstVessels", landingPageController.firstVessels);
+router.get("/isServerRunning", landingPageController.isServerRunning);
 module.exports = router;
