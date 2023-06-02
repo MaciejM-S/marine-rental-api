@@ -18,9 +18,9 @@ This app has been created with the following tech-stack:
 +  REST API
 
 
-To provide better undesrtanding of <b>/back-end</b> this description presents information about controllers, routers and functions directories and its subfiles giving you a better understanding of their purpose and functionality:
+To provide better undesrtanding of <b>/back-end</b> this description presents information about controllers and models used in the app:
 
-# Note that this app has been built before deploying it on render.
+### Note that this app has been built before deploying it on render.
 
 ### controllers 
 - `landingPage.js`:
@@ -30,14 +30,11 @@ To provide better undesrtanding of <b>/back-end</b> this description presents in
 - `vessel.js`:
 - `vessel.ts`: actions connecting with fetching, filtering, sorting vessels.
 
-
-
 ### graphql
 - `resolvers.js`: 
 - `resolvers.ts`: Contains the resolvers for GraphQL schema.
 - `schema.js`: 
 - `schema.ts`: Defines the GraphQL schema for application.
-
 
 ### models
 
@@ -45,18 +42,27 @@ db models are based on User Schema and Comment Schem
 Here is breakdow of the schema for <b>User</b> fields:
 
  + info (Object): Contains information about the user's personal details.
+
   - firstName (String, required): Represents the user's first name.
+ 
   - lastName (String, required): Represents the user's last name.
+ 
   - telephone (String): Represents the user's telephone number.
   
 + email (String, required): Represents the user's email address. It is a required field.
+ 
   -  (String, required): Represents the user's password. It is a required field.
+    
   -  tokens (Array of Objects): Represents the authentication tokens associated with the user.
+ 
       -  token (String): Represents an authentication token.
       
 + avatar (Object): Contains information about the user's avatar.
+
   - date (String): Represents the date associated with the avatar.
+
   - data (Buffer): Represents the binary data of the avatar image.
+  
   - description (String): Represents a description or caption for the avatar.
   
 + vessels (Array of Objects): Represents the user's vessels.
