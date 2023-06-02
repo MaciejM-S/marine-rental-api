@@ -53,13 +53,17 @@ Here is breakdow of the schema for <b>User</b> fields:
   -  (String, required): Represents the user's password. It is a required field.
   -  tokens (Array of Objects): Represents the authentication tokens associated with the user.
       -  token (String): Represents an authentication token.
+      
 + avatar (Object): Contains information about the user's avatar.
   - date (String): Represents the date associated with the avatar.
   - data (Buffer): Represents the binary data of the avatar image.
   - description (String): Represents a description or caption for the avatar.
+  
 + vessels (Array of Objects): Represents the user's vessels.
   - vesselId (String, ref: "vessel"): Represents the ID of a vessel associated with the user. It references the "vessel" model.
+  
 + favorites (Array of Strings): Represents the user's favorite items, which can be of any type.
+
 + firstVessel (Boolean, default: true): Represents whether the user has a first vessel. It is set to true by default.
  
 Here is breakdow of the schema for <b>Vessel</b> fields:
