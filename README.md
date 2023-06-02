@@ -1,9 +1,8 @@
 # marine-rental-api
 This repository contains back-end/api application for marine-rental, a FullStack networking web application. The application is deployed at:
 
-# https://your-exp.onrender.com
-Main features of this app has been describe in the front-end repository: https://github.com/MaciejM-S/your-exp-front-end
-
+# https://marine-rental.onrender.com/
+Main features of this app has been describe in the front-end repository: https://github.com/MaciejM-S/marine-rental-front-end
 
 The application has been deployed on Render as a node Web Service
 
@@ -15,105 +14,80 @@ This app has been created with the following tech-stack:
 +  REST API
 +  JWT
 +  bcrypt
-+  SendGrid - for password restoring
++  graphQL
++  REST API
 
 
 To provide better undesrtanding of <b>/back-end</b> this description presents information about controllers, routers and functions directories and its subfiles giving you a better understanding of their purpose and functionality:
 
-### controllers
+# Note that this app has been built before deploying it on render.
 
-- friends.js: This file is a controller file responsible for handling requests related to friends functionality. 
-It contains functions and route handlers for managing interactions with other users: adding friends, removing etc.
+### controllers 
+- `landingPage.js`:
+- `landingPage.ts`: controllers for handling landing page operation -> excluding fetching vessels
+- `user.js`: 
+- `user.ts`: all controllers connected with user action -> siginingIn/Up, authorizing, adding/changing info, adding/removing favorites. 
+- `vessel.js`:
+- `vessel.ts`: actions connecting with fetching, filtering, sorting vessels.
 
-- init.js: The init.js file is a controller file that handles initialization tasks. 
-It includes functions and route handlers initialize the server, register users, signin users and checking jwt stored in the browser memory.
 
-- profile.js: The profile.js file is a controller file that handles requests related to user profiles. 
-It contains functions and route handlers for managing user profiles, such as fetching user profile information, updating profile details, uploading profile pictures, retrieving user posts, and performing other profile-related operations.
 
-- universal.js: The universal.js file is a controller file that contains common or utility functions used throughout the application. 
-
-### routers
-
-- friends.js
-- init.js
-- profile.js
-- universal.js
-
-### functions
-
-- addPost.js: Contains the function responsible for adding a new post to db and additionaly adding it to the other users main wall
-- generateAuthToken.js: Contains the function for generating an authentication token with jwt
-- generateResult.js: Contains the function for generating a list of users according to passed arguments (criterions)
-- personsGenerator.js: Contains the function for generating persons according to passed arguments (criterions)
-- pushInvitation.js: Contains the function for pushing an invitation adding invitation to invited profile and additionaly to the user that sent invitation
-- resetingPasswordEmail.js: Contains the function for sending a password reset email with Send Grid
-- validate.js: Contains the function for validating email and password
+### graphql
+- `resolvers.js`: 
+- `resolvers.ts`: Contains the resolvers for GraphQL schema.
+- `schema.js`: 
+- `schema.ts`: Defines the GraphQL schema for application.
 
 
 ### models
 
 db models are based on User Schema and Comment Schem
 Here is breakdow of the schema for <b>User</b> fields:
-- info: An object containing the user's personal information.
-  - firstName: The user's first name. (required)
-  - lastName: The user's last name. (required)
-  - residence: The user's residence.
-  - education: The user's education.
-  - workplace: The user's workplace.
-- email: The user's email address. (required)
-- password: The user's password - bcrypted (required)
-- tokens: An array of tokens associated with the user.
-  - token: A token string - jwt
-- avatar: The user's avatar object.
-  - date: The date of the avatar added/changed.
-  - data: The avatar data (Buffer).
-  - description: Description of the avatar(meta) - this data are not displayed in the app.
-- profilePic: The user's profile picture object.
-  - date: The date of the profile picture.
-  - data: The profile picture data (Buffer).
-  - description: Description of the profile picture(meta) - this data are not displayed in the app.
-- pictures: An array of picture objects associated with the user.
-  - picture: The picture object.
-    - data: The picture data (Buffer).
-- invitationsSent: An array of invitation IDs sent by the user.
-  - _id: The ID of the invitation that has been sent by user (account owner).
-- invitationsReceived: An array of invitation IDs received by the user.
-  - _id: The ID of User that sent invitation.
-- friends: An array of friend IDs associated with the user.
-  - _id: The ID of the friend.
-- blocked: An array of user IDs blocked by the user.
-  - _id: The ID of the blocked user.
-- restrictedInfo: A boolean indicating if the user's info is restricted. (default: false)
-- restrictedPhotos: A boolean indicating if the user's photos are restricted. (default: false)
-- posts: An array of post objects created by the user.
-  - post: The post object.
-    - user_id: The ID of the user who created the post.
-    - userFirstName: The first name of the user who created the post.
-    - userLastName: The last name of the user who created the post.
-    - userAvatar: The avatar object of the user who created the post.
-      - data: The avatar data (Buffer).
-    - type: The type of the post (it can be: post added, profile picture updated, picture added ).
-    - date: The date of the post.
-    - photos: An array of photo objects associated with the post.
-      - data: The photo data (Buffer).
-    - description: The description of the post.
-    - commentsId: The ID of the comments associated with the post while post is added new comments object is created -> see comment section is this docs.
-    - title: The title of the post.
-    - range: The range of the post.
+
+ + info (Object): Contains information about the user's personal details.
+  - firstName (String, required): Represents the user's first name.
+  - lastName (String, required): Represents the user's last name.
+  - telephone (String): Represents the user's telephone number.
+  
++ email (String, required): Represents the user's email address. It is a required field.
+  -  (String, required): Represents the user's password. It is a required field.
+  -  tokens (Array of Objects): Represents the authentication tokens associated with the user.
+      -  token (String): Represents an authentication token.
++ avatar (Object): Contains information about the user's avatar.
+  - date (String): Represents the date associated with the avatar.
+  - data (Buffer): Represents the binary data of the avatar image.
+  - description (String): Represents a description or caption for the avatar.
++ vessels (Array of Objects): Represents the user's vessels.
+  - vesselId (String, ref: "vessel"): Represents the ID of a vessel associated with the user. It references the "vessel" model.
++ favorites (Array of Strings): Represents the user's favorite items, which can be of any type.
++ firstVessel (Boolean, default: true): Represents whether the user has a first vessel. It is set to true by default.
  
-Note: The schema includes nested objects and arrays to represent complex data structures associated with a user, such as pictures, posts, friends, and invitations.
+Here is breakdow of the schema for <b>Vessel</b> fields:
++ user (String, required, ref: "user"): Represents the ID of the user who owns the vessel. It references the "user" model.
+
++ name (String, required): Represents the name of the vessel.
+
++ description (String): Represents the description of the vessel.
+
++ location (String, required): Represents the location of the vessel.
+
++ year (Number, required): Represents the year the vessel was built.
+
++ size (String, required): Represents the size of the vessel.
+
++ type (String, required): Represents the type of the vessel.
+
++ pictures (Array of Objects): Represents the pictures of the vessel.
+  - data (Buffer): Represents the binary data of a picture.
+  
++ pricePerDay (Number): Represents the price per day to rent the vessel.
+ 
++ pricePerWeek (Number): Represents the price per week to rent the vessel.
+ 
++ pickupDay (String): Represents the day for vessel pickup.
+ 
++ returnDay (String): Represents the day for vessel return.
+
++ isFirstVessel (Boolean, default: false): Represents whether the vessel is the user's first vessel. It is set to false by default.
 
 
-Here is breakdow of the schema for <b>Comment</b> fields:
-- commentsId: The ID of the comments associated with the document.
-- comments: An array of comment objects.
-  - comment: The comment object.
-    - firstName: The first name of the commenter.
-    - lastName: The last name of the commenter.
-    - avatar: The avatar object of the commenter.
-      - data: The avatar data (Buffer).
-    - text: The comment text.
-    - date: The date of the comment.
-- hearts: An array of strings representing users who hearted the comment.
-- thumbsup: An array of strings representing users who gave a thumbs-up to the comment.
